@@ -50,28 +50,12 @@ python manage.py createsuperuser
 python manage.py runserver
 Visit http://127.0.0.1:8000/ in your browser.
 
-Project Structure
-
-blog-application/
-│── blog/                   # Main app
-│   ├── migrations/         # Database migrations
-│   ├── static/             # Static files
-│   ├── templates/          # HTML templates
-│   ├── views.py            # Views
-│   ├── models.py           # Models
-│   ├── urls.py             # URL routes
-│── myproject/              # Django project files
-│── db.sqlite3              # Database file
-│── manage.py               # Django management script
-│── requirements.txt        # Dependencies
-
 
 Technologies Used
 Django (Python)
 SQLite (Database)
 Bootstrap (CSS Framework)
 HTML & CSS
-
 
 
 License
