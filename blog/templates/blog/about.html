@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Blog</title>
+    
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social media icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <style>
+        /* Global Styles */
+body {
+    background: linear-gradient(to right, #f0f2f5, #e0e5ec);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #007bff !important;
+}
+
+.navbar-toggler {
+    border-color: #007bff;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    background-color: black;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content */
+.container {
+    padding: 70px 30px;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* About Us Section */
+.about-us .display-4 {
+    font-weight: 600;
+    color: #333;
+}
+
+.about-us .lead {
+    font-weight: 400;
+    color: #555;
+}
+
+
+/* Team Section */
+.team-section img {
+    width: 100px; /* Set uniform size */
+    height: 100px;
+    object-fit: cover; /* Crop images instead of stretching */
+   
+    border: 3px solid #007bff;
+    display: block;
+    margin: 0 auto 10px; /* Centering images */
+}
+
+
+/* Footer */
+.footer {
+    background-color: black;
+    color: white;
+    padding: 30px 0;
+}
+
+.footer h5 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer a:hover {
+    color: #007bff;
+}
+
+.footer .social-icons i {
+    font-size: 2em;
+    margin: 0 15px;
+    transition: all 0.3s ease;
+}
+
+.footer .social-icons i:hover {
+    color: #007bff;
+    transform: translateY(-5px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #bbb;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">My Blog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <!-- Authentication Links -->
+                    {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+   <!-- About Us Section -->
+<section class="about-us py-5">
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">About Us</h1>
+            <p class="lead">Welcome to My Blog! We are passionate about sharing knowledge, stories, and insights to inspire and inform our readers.</p>
+        </div>
+
+        <div class="row align-items-center">
+            <!-- About Content -->
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-4">Our Story</h2>
+                <p class="text-muted">At My Blog, we believe in the power of storytelling and knowledge-sharing. Our journey began with a simple idea: to create a platform where people can explore diverse topics, from lifestyle and technology to personal growth and innovation.</p>
+                <p class="text-muted">Our mission is to provide high-quality, engaging content that resonates with our audience, fostering a community of like-minded individuals who can connect, learn, and grow together.</p>
+                <h3 class="fw-bold mt-4">Why Choose Us?</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <i class="fas fa-check-circle text-primary me-2"></i>
+                        <strong>Expert Writers:</strong> Our team consists of experienced writers and industry experts.
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-check-circle text-primary me-2"></i>
+                        <strong>Diverse Topics:</strong> We cover a wide range of topics to cater to all interests.
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-check-circle text-primary me-2"></i>
+                        <strong>Community-Driven:</strong> We value our readers and strive to build a strong, supportive community.
+                    </li>
+                </ul>
+                <a href="{% url 'register' %}" class="btn btn-primary mt-3">
+                    <i class="fas fa-user-plus me-2"></i>Join Our Community
+                </a>
+            </div>
+
+            <!-- Team Section -->
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-4">Meet Our Team</h2>
+                <div class="row">
+                    <!-- Team Member 1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card text-center h-100 shadow-sm">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="card-img-top rounded-circle mx-20 mt-20" alt="Dinuka Ashan">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Dinuka ashan</h5>
+                                <p class="card-text text-muted">Founder & Editor</p>
+                                <div class="social-icons">
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card text-center h-100 shadow-sm">
+                            <img src="https://randomuser.me/api/portraits/women/45.jpg" class="card-img-top rounded-circle mx-20 mt-20" alt="Jane Smith">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Jane Smith</h5>
+                                <p class="card-text text-muted">Content Writer</p>
+                                <div class="social-icons">
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card text-center h-100 shadow-sm">
+                            <img src="https://randomuser.me/api/portraits/women/47.jpg" class="card-img-top rounded-circle mx-20 mt-20" alt="ema kotler">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Ema kotler</h5>
+                                <p class="card-text text-muted">Content Writer</p>
+                                <div class="social-icons">
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card text-center h-100 shadow-sm">
+                            <img src="https://randomuser.me/api/portraits/men/50.jpg" class="card-img-top rounded-circle mx-auto mt-4" alt="Mark Johnson">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Mark Johnson</h5>
+                                <p class="card-text text-muted">Developer</p>
+                                <div class="social-icons">
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+     <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Company Section -->
+                <div class="col-md-4">
+                    <h5 class="text-uppercase">My Blog</h5>
+                    <p>Discover interesting stories, posts, and more. Stay tuned!</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-4">
+                    <h5 class="text-uppercase">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">About</a></li>
+                        <li><a href="#" class="text-white">Contact</a></li>
+                        <li><a href="#" class="text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Media Icons -->
+                <div class="col-md-4">
+                    <h5 class="text-uppercase">Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" class="text-white" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com" class="text-white" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" class="text-white" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://linkedin.com" class="text-white" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <p>&copy; 2025 My Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
