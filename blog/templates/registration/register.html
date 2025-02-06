@@ -207,6 +207,14 @@
         <p class="text-center mt-3">
             Already have an account? <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login here</a>
         </p>
+        {% if messages %}
+    <div class="alert alert-danger">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
     </div>
 
     <!-- Footer -->
