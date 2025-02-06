@@ -22,6 +22,20 @@ from django.db.models import Count
 
 from .models import Post, Comment, Like
 
+
+
+from django.contrib.auth.models import User
+
+
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.contrib.auth.password_validation import validate_password
+
+
+
+
+
+
 def comment_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -162,14 +176,59 @@ def user_logout(request):
 def register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
+        
+        # Extract user inputs
+        username = request.POST.get('username').strip()
+        email = request.POST.get('email').strip()
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        # Check if username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists. Please choose another.")
+            return redirect("register")
+
+        # Check if email already exists
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "An account with this email already exists.")
+            return redirect("register")
+
+        # Validate email format
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, "Invalid email format.")
+            return redirect("register")
+
+        # Check password match
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return redirect("register")
+
+        # Validate password strength
+        try:
+            validate_password(password1)
+        except ValidationError as e:
+            for error in e.messages:
+                messages.error(request, error)
+            return redirect("register")
+
+        # If all checks pass, save user
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account created successfully!')
-            return redirect("login")  # Redirect after successful registration
+            messages.success(request, "Account created successfully! Please log in.")
+            return redirect("login")
+        else:
+            messages.error(request, "Something went wrong. Please check the form.")
+
     else:
         form = CustomUserCreationForm()
 
     return render(request, "registration/register.html", {"form": form})
+
+
+
+
 
 # Profile view (only accessible when logged in)
 @login_required
