@@ -187,40 +187,104 @@
         </div>
     </div>
 </nav>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h3>{{ user.username }}'s Profile</h3>
+
+{% load static %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>{{ user.username }}'s Profile</h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="text-center mb-4">Welcome, {{ user.username }}!</h4>
+
+                    <div class="row mb-3">
+                        <div class="col-12 col-md-4 text-center">
+                            <h5>Total Posts Created: <strong>{{ post_count }}</strong></h5>
+                        </div>
+                        <div class="col-12 col-md-4 text-center">
+                            <h5>Profile Exists: <strong>{{ user.profile|default:"No profile available" }}</strong></h5>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="text-center">Welcome, {{ user.username }}!</h4>
-                        <hr>
-                        <form>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
+
+                    <hr>
+
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <label for="profile_picture" class="form-label">Profile Picture</label>
+                            <div class="d-flex justify-content-center position-relative">
+                                {% if user.profile.profile_picture %}
+                                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" 
+                                         class="rounded-circle border border-3 border-primary" width="150" id="profileImg">
+                                {% else %}
+                                    <img src="{% static 'default-profile.png' %}" alt="Default Profile Picture"
+                                         class="rounded-circle border border-3 border-primary" width="150" id="profileImg">
+                                {% endif %}
+                                <button type="button" id="editProfileBtn" class="btn btn-link position-absolute top-0 end-0" 
+                                        data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                    <i class="fas fa-pen"></i>
+                                </button>
                             </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" value="{{ user.email }}" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bio" class="form-label">Bio</label>
-                                <textarea class="form-control" id="bio" rows="3" disabled>{{ user.bio }}</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="date_joined" class="form-label">Joined</label>
-                                <input type="text" class="form-control" id="date_joined" value="{{ user.date_joined }}" disabled>
-                            </div>
-                           
-                        </form>
+                        </div>
                     </div>
+
+                    <form method="POST" action="{% url 'update_bio' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" value="{{ user.email }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea class="form-control" id="bio" rows="3" name="bio">{{ user.profile.bio }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="date_joined" class="form-label">Joined</label>
+                            <input type="text" class="form-control" id="date_joined" value="{{ user.date_joined }}" disabled>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a href="{% url 'change_password' %}" class="btn btn-warning">
+                                <i class="fas fa-cogs"></i> Change Password
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal for profile picture upload -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">Upload Profile Picture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'update_profile_picture' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="new_profile_picture" class="form-label">Choose a New Profile Picture</label>
+                        <input type="file" class="form-control" id="new_profile_picture" name="profile_picture">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
    <!-- Footer -->
    <footer class="footer">
     <div class="container">
@@ -270,5 +334,12 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Toggle textarea between editable and disabled
+    document.getElementById('editBioBtn').addEventListener('click', function() {
+        var bioField = document.getElementById('bio');
+        bioField.disabled = !bioField.disabled; // Toggle between editable and disabled
+    });
+</script>
 </body>
 </html>

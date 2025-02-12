@@ -175,20 +175,21 @@ body {
 
 
    <!-- About Us Section -->
-<section class="about-us py-5">
+<section class="about-us bg-light py-5">
     <div class="container">
         <!-- Hero Section -->
         <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold">About Us</h1>
-            <p class="lead">Welcome to My Blog! We are passionate about sharing knowledge, stories, and insights to inspire and inform our readers.</p>
+            <h1 class="display-4 fw-bold text-primary">Who We Are</h1>
+            <p class="lead text-muted">Empowering creators, thinkers, and innovators to share their stories with the world.</p>
         </div>
 
         <div class="row align-items-center">
-            <!-- About Content -->
-            <div class="col-md-6">
-                <h2 class="fw-bold mb-4">Our Story</h2>
+            <!-- Left Content -->
+            <div class="col-lg-6">
+                <h2 class="fw-bold">Our Mission</h2>
                 <p class="text-muted">At My Blog, we believe in the power of storytelling and knowledge-sharing. Our journey began with a simple idea: to create a platform where people can explore diverse topics, from lifestyle and technology to personal growth and innovation.</p>
-                <p class="text-muted">Our mission is to provide high-quality, engaging content that resonates with our audience, fostering a community of like-minded individuals who can connect, learn, and grow together.</p>
+                <p class="text-muted">We strive to provide high-quality, engaging content that resonates with our audience, fostering a community of like-minded individuals who can connect, learn, and grow together.</p>
+
                 <h3 class="fw-bold mt-4">Why Choose Us?</h3>
                 <ul class="list-unstyled">
                     <li class="mb-3">
@@ -204,75 +205,95 @@ body {
                         <strong>Community-Driven:</strong> We value our readers and strive to build a strong, supportive community.
                     </li>
                 </ul>
-                <a href="{% url 'register' %}" class="btn btn-primary mt-3">
-                    <i class="fas fa-user-plus me-2"></i>Join Our Community
+
+                <div class="d-flex align-items-center mt-4">
+                    <i class="fas fa-users fa-3x text-primary me-3"></i>
+                    <p class="fw-bold mb-0">Join our growing community of 10,000+ passionate readers and contributors.</p>
+                </div>
+
+                <a href="{% url 'register' %}" class="btn btn-primary mt-4">
+                    <i class="fas fa-user-plus me-2"></i>Become a Contributor
                 </a>
             </div>
 
-            <!-- Team Section -->
-            <div class="col-md-6">
-                <h2 class="fw-bold mb-4">Meet Our Team</h2>
-                <div class="row">
-                    <!-- Team Member 1 -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card text-center h-100 shadow-sm">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="card-img-top rounded-circle mx-20 mt-20" alt="Dinuka Ashan">
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold">Dinuka ashan</h5>
-                                <p class="card-text text-muted">Founder & Editor</p>
-                                <div class="social-icons">
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Right Image Section -->
+            <div class="col-lg-6 text-center">
+                <img src="https://www.w3schools.com/w3images/fjords.jpg" class="img-fluid rounded shadow" alt="Our Team">
 
-                    <!-- Team Member 2 -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card text-center h-100 shadow-sm">
-                            <img src="https://randomuser.me/api/portraits/women/45.jpg" class="card-img-top rounded-circle mx-20 mt-20" alt="Jane Smith">
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold">Jane Smith</h5>
-                                <p class="card-text text-muted">Content Writer</p>
-                                <div class="social-icons">
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Team Member 3 -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card text-center h-100 shadow-sm">
-                            <img src="https://randomuser.me/api/portraits/women/47.jpg" class="card-img-top rounded-circle mx-20 mt-20" alt="ema kotler">
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold">Ema kotler</h5>
-                                <p class="card-text text-muted">Content Writer</p>
-                                <div class="social-icons">
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Team Member 4 -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card text-center h-100 shadow-sm">
-                            <img src="https://randomuser.me/api/portraits/men/50.jpg" class="card-img-top rounded-circle mx-auto mt-4" alt="Mark Johnson">
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold">Mark Johnson</h5>
-                                <p class="card-text text-muted">Developer</p>
-                                <div class="social-icons">
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Meet the Team Section -->
+<section class="team bg-white py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">Meet Our Team</h2>
+            <p class="text-muted">Passionate individuals dedicated to bringing you valuable insights.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Team Member 1 -->
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center p-3">
+                    <img src="https://randomuser.me/api/portraits/men/52.jpg" class="rounded-circle mx-auto mt-3" width="120" alt="John Doe">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">John Doe</h5>
+                        <p class="text-muted">Founder & CEO</p>
+                        <div class="social-icons">
+                            <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-dark"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center p-3">
+                    <img src="https://randomuser.me/api/portraits/women/48.jpg" class="rounded-circle mx-auto mt-3" width="120" alt="Sarah Lee">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Sarah Lee</h5>
+                        <p class="text-muted">Lead Editor</p>
+                        <div class="social-icons">
+                            <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-dark"><i class="fab fa-medium"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center p-3">
+                    <img src="https://randomuser.me/api/portraits/men/46.jpg" class="rounded-circle mx-auto mt-3" width="120" alt="James Carter">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">James Carter</h5>
+                        <p class="text-muted">Tech Writer</p>
+                        <div class="social-icons">
+                            <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-dark"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Member 4 -->
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center p-3">
+                    <img src="https://randomuser.me/api/portraits/women/60.jpg" class="rounded-circle mx-auto mt-3" width="120" alt="Emma Brown">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Emma Brown</h5>
+                        <p class="text-muted">Marketing Strategist</p>
+                        <div class="social-icons">
+                            <a href="#" class="text-dark me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-dark me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-dark"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -280,6 +301,7 @@ body {
         </div>
     </div>
 </section>
+
 
      <!-- Footer -->
     <footer class="footer">

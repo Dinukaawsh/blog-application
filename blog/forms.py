@@ -4,7 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Post
 from .models import Comment
+from .models import Profile 
+from .models import Post, Category
 
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile  # Use Profile instead of User
+       
+        fields = ['bio', 'profile_picture'] 
 
 
 
@@ -32,6 +40,7 @@ class CustomUserCreationForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already in use.")
         return email
+
 
     def clean(self):
         cleaned_data = super().clean()
@@ -62,9 +71,15 @@ class CustomLoginForm(AuthenticationForm):
 
 
 class PostForm(forms.ModelForm):
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        empty_label="Select a Category",
+        widget=forms.Select(attrs={'class': 'form-control'})  # Ensures Bootstrap styling
+    )
+
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'image', 'category']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter title'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your post...', 'rows': 5}),
