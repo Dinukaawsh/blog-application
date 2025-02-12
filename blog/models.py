@@ -1,27 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    
-    def __str__(self):
-        return self.name
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
 
     def __str__(self):
         return self.user.username
 
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=255)
     content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)  # Image field
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     def __str__(self):
         return self.title
 
@@ -34,7 +35,9 @@ class Comment(models.Model):
     content = models.TextField()
     parent_comment = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True) 
-
+    
+    def get_total_comments(self):
+        return self.comments.count()
     def __str__(self):
         return f"Comment by {self.user.username} on {self.post.title}"
     

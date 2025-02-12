@@ -170,16 +170,42 @@
     <div class="container text-center my-5 pt-5">
         <h1 class="display-4">Welcome to My Blog!</h1>
         <p class="lead mb-4">Discover interesting stories, posts, and more. Stay connected and updated.</p>
-
+    
         {% if not user.is_authenticated %}
         <div class="d-flex justify-content-center">
-            <a href="{% url 'login' %}" class="btn btn-primary">Get start</a>
-           
+            <!-- Redirect to login page if not authenticated -->
+            <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
         </div>
         {% else %}
         <p class="text-muted">You are already logged in. <a href="{% url 'home' %}" class="btn btn-light">Go to Home</a></p>
         {% endif %}
+    
+        <h2 class="my-5">Latest Posts</h2>
+    
+        <div class="row">
+            {% for post in recent_posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content|slice:":150" }}...</p>
+                        {% if user.is_authenticated %}
+                            <!-- Only show the Read More button if the user is authenticated -->
+                            <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">Read More</a>
+                        {% else %}
+                            <!-- Redirect to login page if the user is not authenticated -->
+                            <a href="{% url 'login' %}" class="btn btn-primary">Read More</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No posts available yet.</p>
+            {% endfor %}
+        </div>
     </div>
+    
 
     
 

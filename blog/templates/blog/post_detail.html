@@ -18,7 +18,55 @@
             font-family: 'Poppins', sans-serif;
             color: #333;
         }
-
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+        .post-content {
+            padding: 20px 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .action-buttons .btn {
+            margin-right: 10px;
+        }
+        .comment-section {
+            margin-top: 30px;
+        }
+        .comment-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment {
+            margin-top: 15px;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment strong {
+            color: #007bff;
+        }
+        .replies {
+            margin-left: 30px;
+            border-left: 2px solid #ddd;
+            padding-left: 15px;
+            margin-top: 10px;
+        }
+        .reply {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+        }
         .navbar {
             background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -53,8 +101,15 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .container {
-            padding: 60px 20px;
+        .btn-outline-primary, .btn-outline-secondary {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            background-color: white; /* Default background */
+            color: black; /* Default text color */
+            border: 2px solid black; /* Border to match the hover effect */
         }
 
         .card {
@@ -188,46 +243,106 @@
     </div>
 </nav>
 
-<!-- Post Details -->
+
 <div class="container my-5">
-    <p>Logged-in user: {{ user.username }}</p>
-    <p>Post author: {{ post.author.username }}</p>
-
-    {% if user.is_authenticated and post.author == user %}
-        <a href="{% url 'update_post' post.id %}" class="btn btn-warning">Edit</a>
-        <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete</a>
-    {% else %}
-        <p>You cannot edit or delete this post.</p>
-    {% endif %}
-
-    <h1 class="my-4">{{ post.title }}</h1>
-    <p>by {{ post.author.username }} | {{ post.created_at }}</p>
-    <p>{{ post.content }}</p>
-    <p>Likes: {{ post.total_likes }}</p>
-    <a href="{% url 'like_post' post.id %}" class="btn btn-primary">
-        <i class="fas fa-thumbs-up"></i> 
-    </a>
+    <!-- Post Header -->
+    <div class="post-header">
+        <h2 class="fw-bold">{{ post.title }}</h2>
+        <div class="text-muted">
+            <i class="fas fa-user"></i> {{ post.author.username }} | 
+            <i class="fas fa-calendar"></i> {{ post.created_at }}
+        </div>
+    </div>
     
-    <!-- Comment Section -->
-    <h3>Comments</h3>
-    <form method="POST" action="{% url 'comment_post' post.id %}">
-        {% csrf_token %}
-        {{ form.as_p }} <!-- Render the form fields -->
-        <button type="submit" class="btn btn-success mt-2">Post Comment</button>
-    </form>
 
-    <div class="comments">
+    <!-- Post Content -->
+    <div class="post-content p-3 border rounded bg-light">
+        {% if post.image %}
+            <div class="text-center mb-3">
+                <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid rounded shadow-sm" style="max-height: 400px; object-fit: cover;">
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                <i class="fas fa-exclamation-circle"></i> No image available.
+            </div>
+        {% endif %}
+    
+        <div class="content-text">
+            <p class="fs-5">{{ post.content }}</p>
+        </div>
+    </div>
+    
+
+    <!-- Action Buttons -->
+    <div class="action-buttons d-flex justify-content-between">
+        <!-- Like Button -->
+        <div>
+            <a href="{% url 'like_post' post.id %}" class="btn btn-light border">
+                <i class="fas fa-thumbs-up"></i> {{ post.total_likes }}
+            </a>
+        </div>
+    
+        <!-- Check if the user is the post author -->
+        {% if user.is_authenticated %}
+            {% if post.author == user %}
+                <div>
+                    <a href="{% url 'update_post' post.id %}" class="btn btn-warning">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            {% else %}
+                <div class="alert alert-warning p-2 small">
+                    <i class="fas fa-exclamation-triangle"></i> You cannot edit or delete this post because you're not the author.
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    
+
+    <!-- Comment Section -->
+    <div class="comment-section">
+        <h3 class="my-3"><i class="fas fa-comments"></i> Comments</h3>
+
+        <!-- Comment Form -->
+        <div class="comment-box">
+            <form method="POST" action="{% url 'comment_post' post.id %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.content }}
+                </div>
+                <button type="submit" class="btn btn-success px-4">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+                
+                
+            </form>
+        </div>
+
+        <!-- Comments List -->
         {% for comment in comments %}
-            <div class="comment">
-                <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
-                <p><a href="#" class="btn btn-info" data-toggle="collapse" data-target="#replyForm{{ comment.id }}">Reply</a></p>
+            <div class="comment mt-3">
+                <p>
+                    <strong><i class="fas fa-user"></i> {{ comment.user.username }}</strong>
+                </p>
+                <p>{{ comment.content }}</p>
+                <a href="#" class="btn btn-sm btn-outline-info" data-bs-toggle="collapse" data-bs-target="#replyForm{{ comment.id }}">
+                    <i class="fas fa-reply"></i>
+                    
+                </a>
+                
+           
                 <!-- Reply Form -->
-                <div id="replyForm{{ comment.id }}" class="collapse">
+                <div id="replyForm{{ comment.id }}" class="collapse mt-2">
                     <form method="POST" action="{% url 'comment_post' post.id %}">
                         {% csrf_token %}
                         <textarea name="content" class="form-control" placeholder="Reply to this comment..."></textarea>
-                        <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">  <!-- Set the parent comment ID -->
-                        <button type="submit" class="btn btn-warning mt-2">Post Reply</button>
+                        <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
+                        <button type="submit" class="btn btn-warning mt-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
                     </form>
                 </div>
 
@@ -235,7 +350,10 @@
                 <div class="replies">
                     {% for reply in comment.replies.all %}
                         <div class="reply">
-                            <p><strong>{{ reply.user.username }}</strong>: {{ reply.content }}</p>
+                            <p>
+                                <strong><i class="fas fa-user"></i> {{ reply.user.username }}</strong>
+                            </p>
+                            <p>{{ reply.content }}</p>
                         </div>
                     {% endfor %}
                 </div>

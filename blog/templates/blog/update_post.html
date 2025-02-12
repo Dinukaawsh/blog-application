@@ -190,12 +190,15 @@
 
 <div class="container mt-4">
     <h2>Edit Post</h2>
-    <form method="post">
+    
+    <form method="post" enctype="multipart/form-data">
+        
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Update Post</button>
         <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
     </form>
+    
 </div>
 
 <!-- Footer -->

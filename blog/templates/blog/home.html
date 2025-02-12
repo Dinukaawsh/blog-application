@@ -11,115 +11,229 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for social media icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+   <style>
     <!-- Custom styles -->
-    <style>
-        body {
-            background: linear-gradient(to right, #f0f2f5, #e0e5ec); /* Subtle gradient */
-            font-family: 'Poppins', sans-serif;
-            color: #333;
-        }
-
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-size: 1.8em;
-            font-weight: 600;
-            color: #007bff !important;
-        }
-
-        .btn-primary, .btn-secondary {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            background-color: white; /* Default background */
-            color: black; /* Default text color */
-            border: 2px solid black; /* Border to match the hover effect */
-        }
-        
-        .btn-primary:hover, .btn-secondary:hover {
-            background-color: black; /* Hover background */
-            color: white; /* Hover text color */
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-primary:hover, .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-container {
-            max-width: 600px;
-            margin: 60px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .footer {
-            background-color: black;
-            color: white;
-            padding: 30px 0;
-        }
-
-        .footer h5 {
-            font-size: 1.3em;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .footer a {
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .footer .social-icons i {
-            font-size: 2em;
-            margin: 0 15px;
-            transition: all 0.3s ease;
-        }
-
-        .footer .social-icons i:hover {
-            color: #007bff;
-            transform: translateY(-5px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #bbb;
-        }
-
-        .navbar-toggler {
-            border-color: #007bff;
-        }
-
-        .navbar-toggler-icon {
-            background-color: #007bff;
-        }
-
-        .display-4 {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .lead {
-            font-weight: 400;
-            color: #555;
-        }
-    </style>
+    body {
+        background: linear-gradient(to right, #f0f2f5, #e0e5ec); /* Subtle gradient */
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+    
+    /* Navbar styling */
+    .navbar {
+        background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar-brand {
+        font-size: 1.8em;
+        font-weight: 600;
+        color: #007bff !important;
+    }
+    
+    .navbar-toggler {
+        border-color: #007bff;
+    }
+    
+    .navbar-toggler-icon {
+        background-color: #007bff;
+    }
+    
+    /* Button styling */
+    .btn-primary, .btn-secondary {
+        font-size: 1.2em;
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 30px;
+        border: 2px solid black; /* Border to match the hover effect */
+        background-color: white; /* Default background */
+        color: black; /* Default text color */
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover, .btn-secondary:hover {
+        background-color: black;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Form container */
+    .form-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Footer styling */
+    .footer {
+        background-color: black;
+        color: white;
+        padding: 30px 0;
+    }
+    
+    .footer h5 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .footer a {
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .footer a:hover {
+        color: #007bff;
+    }
+    
+    .footer .social-icons i {
+        font-size: 2em;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .footer .social-icons i:hover {
+        color: #007bff;
+        transform: translateY(-5px);
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #bbb;
+    }
+    
+    /* Post Wrapper */
+    .post-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    /* Post animation */
+    .post {
+        opacity: 0;
+        transform: translateX(100%);
+        transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+    }
+    
+    .post.show {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* Card styling */
+    .card {
+        border: 2px solid #f1f1f1;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Pagination Styling */
+    .pagination-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    /* Pagination buttons */
+    .pagination-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .pagination-buttons .btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .pagination-buttons .btn:hover {
+        background-color: #0056b3;
+        color: white;
+        border-color: #0056b3;
+    }
+    
+    /* Page info (Page X of Y) */
+    .pagination-info {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    /* Styling for active/selected page number */
+    .pagination .current {
+        background-color: #007bff;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+    }
+    
+    /* Optional: Styling for search input and button */
+    .form-group {
+        margin-bottom: 0;
+    }
+    
+    button i {
+        font-size: 18px;
+    }
+    
+    /* Navbar search button */
+    .navbar .btn-outline-dark {
+        font-size: 1rem;
+    }
+    
+    /* Search form styling */
+    .form-group select, .form-group input {
+        height: 45px;
+    }
+    
+    /* Positioning for the search form */
+    .container.mt-5 form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .container.mt-5 form .form-group {
+        margin-bottom: 0;
+        width: 48%;
+    }
+    
+    .container.mt-5 form button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+    
+    .container.mt-5 form button i {
+        font-size: 24px;
+        color: #007bff;
+    }
+    
+    /* Ensuring consistency in padding and margins */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+</style>    
 </head>
 <body>
 
@@ -180,54 +294,93 @@
     </div>
 </nav>
 
-    <!-- Main Content -->
-<div class="container my-5">
-    <!-- Display Posts -->
-    {% for post in page_obj %}
-        <div class="post card mb-4">
-            <div class="card-body">
-                <h2 class="card-title">{{ post.title }}</h2>
-                <p class="card-text">{{ post.content|slice:":200" }}...</p>
-                <a href="{% url 'post_detail' pk=post.pk %}" >Read More</a><br><br><br>
-                <p>Likes: {{ post.total_likes }}</p>
-                <p>Comments: {{ post.total_comments }}</p>
-                <a href="{% url 'like_post' post.id %}" class="btn btn-primary">
-                    <i class="fas fa-thumbs-up"></i> 
-                </a>
-                <a href="{% url 'comment_post' post.id %}" class="btn btn-secondary">
-                    <i class="fas fa-comment"></i>
-                </a>
-                
-            </div>
+
+
+<div class="container mt-5">
+    <form method="get" action="{% url 'home' %}" class="d-flex justify-content-between mb-4">
+        <div class="form-group w-50">
+            <input type="text" name="q" class="form-control" value="{{ query }}" placeholder="Search by title, content, or author">
         </div>
-    {% empty %}
-        <p class="text-center">No blog posts yet.</p>
-    {% endfor %}
+        <div class="form-group w-25">
+            <select name="category" class="form-control">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == request.GET.category %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Icon button for search -->
+        <button type="submit" class="btn btn-primary ms-2">
+            <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+        </button>
+    </form>
+</div>
+
+
+
+<!-- Main Content -->
+<div class="container my-5">
+    <!-- Create New Post Button -->
+    {% if user.is_authenticated %}
+    <div class="text-center my-4">
+        <a href="{% url 'create_post' %}" class="btn btn-success">+ Create New Post</a>
+    </div>
+    {% endif %}
+
+    <div class="post-wrapper">
+        {% for post in page_obj %}
+            <div class="post card mb-4 slide-right">
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="card-text">{{ post.content|slice:":200" }}...</p>
+                    <a href="{% url 'post_detail' pk=post.pk %}" >Read More</a><br><br><br>
+                    <p>Likes: {{ post.total_likes }}</p>
+                    <p>Comments: {{ post.total_comments }}</p>  <!-- Displaying the comment count -->
+                    <p>Author: {{ post.author }}</p>
+                    <p>Category: {{ post.category }}</p>
+        
+                    <a href="{% url 'like_post' post.id %}" class="btn btn-primary">
+                        <i class="fas fa-thumbs-up"></i> 
+                    </a>
+                    <a href="{% url 'comment_post' post.id %}" class="btn btn-secondary">
+                        <i class="fas fa-comment"></i>
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No blog posts yet.</p>
+        {% endfor %}
+    </div>
+    
 
     <!-- Pagination controls -->
-    <div class="pagination d-flex justify-content-center">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1" class="btn btn-secondary">&laquo; First</a>
-                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-secondary">Previous</a>
-            {% endif %}
+    <div class="pagination-container d-flex justify-content-center">
+        <!-- Previous and Next Buttons -->
+        <div class="pagination-buttons mb-3">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&q={{ query }}&category={{ request.GET.category }}" class="btn btn-secondary">&laquo; First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}&category={{ request.GET.category }}" class="btn btn-secondary">Previous</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&q={{ query }}&category={{ request.GET.category }}" class="btn btn-secondary">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}&category={{ request.GET.category }}" class="btn btn-secondary">Last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    
+        <!-- Page Info (Page X of Y) -->
+        <div class="pagination-info">
             <span class="current">
                 Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
             </span>
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">Next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-secondary">Last &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
-
-    <!-- Create New Post Button -->
-    {% if user.is_authenticated %}
-        <div class="text-center my-4">
-            <a href="{% url 'create_post' %}" class="btn btn-success">+ Create New Post</a>
         </div>
-    {% endif %}
+    </div>
+    
 </div>
+
 
      <!-- Footer -->
      <footer class="footer">
@@ -278,5 +431,25 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add this script at the bottom of your home.html or in an external JS file -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const posts = document.querySelectorAll('.post');
+        
+        const slideInPosts = () => {
+            const windowHeight = window.innerHeight;
+            posts.forEach(post => {
+                const postPosition = post.getBoundingClientRect().top;
+                if (postPosition <= windowHeight * 0.8) {
+                    post.classList.add('show');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', slideInPosts);
+        slideInPosts();  // Run on initial load in case some posts are already visible
+    });
+</script>
+
 </body>
 </html>

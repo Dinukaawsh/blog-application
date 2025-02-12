@@ -163,27 +163,101 @@
     </nav>
 
 
-    <!-- Main Content -->
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Contact Us</h1>
+<!-- Main Content -->
+<div class="container my-5">
+    <h1 class="text-center mb-4">Contact Us</h1>
+    <p class="text-center mb-5">We’d love to hear from you! Whether you have a question, feedback, or just want to say hello, feel free to reach out to us. Your message matters!</p>
 
-        <form action="{% url 'contact' %}" method="POST">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="name" class="form-label">Your Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+    <div class="row">
+        <!-- Contact Form -->
+        <div class="col-md-6">
+            <form action="{% url 'contact' %}" method="POST">
+                {% csrf_token %}
+                
+                <!-- Name Field -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Your Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                    <div class="invalid-feedback">Please provide your name.</div>
+                </div>
+
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Your Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                    <div class="invalid-feedback">Please provide a valid email address.</div>
+                </div>
+
+                <!-- Message Field -->
+                <div class="mb-3">
+                    <label for="message" class="form-label">Your Message <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="message" name="message" rows="6" placeholder="Write your message here..." required></textarea>
+                    <div class="invalid-feedback">Please enter a message.</div>
+                </div>
+
+                <!-- File Upload (Optional) -->
+                <div class="mb-3">
+                    <label for="attachment" class="form-label">Attach a File (Optional)</label>
+                    <input type="file" class="form-control" id="attachment" name="attachment">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-paper-plane me-2"></i> Send Message
+                </button>
+            </form>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="col-md-6">
+            <h3 class="fw-bold">Our Office</h3>
+            <p class="text-muted">Visit us or get in touch for more information about our services:</p>
+            <ul class="list-unstyled">
+                <li><i class="fas fa-map-marker-alt text-primary"></i> 1234 Street Name, City, Country</li>
+                <li><i class="fas fa-phone-alt text-primary"></i> +1 234 567 890</li>
+                <li><i class="fas fa-envelope text-primary"></i> contact@myblog.com</li>
+            </ul>
+
+            <!-- Social Media Links -->
+            <h3 class="fw-bold mt-4">Follow Us</h3>
+            <div class="d-flex">
+                <a href="#" class="text-primary me-3">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="text-primary me-3">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-primary me-3">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-primary">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Your Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Your Message</label>
-                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
-        </form>
+        </div>
     </div>
+</div>
+
+<!-- Map Section -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Find Us on the Map</h3>
+    <div class="d-flex justify-content-center">
+        <div class="map-container" style="width: 100%; max-width: 100%; height: 500px; overflow: hidden; border-radius: 10px;">
+            <iframe class="embed-responsive-item w-100 h-100" src="https://www.google.com/maps/embed?pb=..." allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+
+<!-- Success/Failure Notification -->
+<div id="notification" class="alert alert-success d-none" role="alert">
+    Your message has been successfully sent! We'll get back to you shortly.
+</div>
+<div id="errorNotification" class="alert alert-danger d-none" role="alert">
+    Something went wrong! Please try again later.
+</div>
+
+
 
     <!-- Footer -->
     <footer class="footer">

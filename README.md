@@ -9,6 +9,7 @@ This project is a simple blog application built using Django. It allows users to
 - Users can register, log in, and log out.
 - Users can maintain their personal profiles (profile picture, bio, etc.).
 - Forgot password functionality with email verification.
+- Users must be authenticated to like posts or access full blog details.
 
 ### 2. Blog Posts
 - Authenticated users can create, edit, and delete their own blog posts.
@@ -16,16 +17,21 @@ This project is a simple blog application built using Django. It allows users to
 - Blog posts have individual pages.
 - Blog posts can be categorized.
 - Users can search for blog posts by title, content, or author.
+- Post images can be added.
+
 
 ### 3. Comments
-- Both authenticated and anonymous users can add comments.
+- Authenticated users can add comments.
 - Comments appear on individual blog post pages.
-- Any user or the author can reply to comments.
+- Users can reply to comments.
+- Comment counts are displayed on the homepage.
 
 ### 4. Additional Features
 - Displays author's name and post creation date.
-- Tracks the number of views for each post.
 - Uses Bootstrap for basic styling.
+- Users must log in to access certain features like commenting, liking, and reading full posts.
+- Uses Bootstrap for a modern and responsive UI.
+- Displays the three most recent blog posts on the index page.
 
 ## Installation and Setup
 
@@ -53,9 +59,10 @@ Visit http://127.0.0.1:8000/ in your browser.
 
 Technologies Used
 Django (Python)
-SQLite (Database)
+MySQL (Database)
 Bootstrap (CSS Framework)
 HTML & CSS
+JavaScript (for interactive UI elements)
 
 
 License
