@@ -7,6 +7,7 @@ from .views import update_post, delete_post
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('', views.index, name='index'),  # Index page (first page with login/register options)
     path('home/', views.home, name='home'),  # Home page (blog posts)
