@@ -1,0 +1,27 @@
+// admin details
+
+Username : admin
+Password : admin1234
+
+
+
+// users details
+
+Username : dinuka
+Password : awsh1234
+
+Username : Denuwan
+Password : awshqwer
+
+Username : Dinusha
+Password : awsh1234
+
+Username : Gihan
+Password : awsh1234
+
+Username : chandima
+Password : awsh1234
+
+Username : roshan
+Password : awsh1234
+
