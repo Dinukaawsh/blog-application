@@ -32,6 +32,8 @@ This project is a simple blog application built using Django. It allows users to
 - Users must log in to access certain features like commenting, liking, and reading full posts.
 - Uses Bootstrap for a modern and responsive UI.
 - Displays the three most recent blog posts on the index page.
+- see how many views for each post.
+- view recent activities of each user.
 
 ## Installation and Setup
 
