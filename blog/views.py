@@ -39,9 +39,18 @@ from django.shortcuts import redirect
 from .models import Category
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from .models import UserActivity  # Import UserActivity model
 
 
- 
+def recent_activities(request):
+    activities = UserActivity.objects.filter(
+        user=request.user, 
+        action_type__in=['create post', 'delete post', 'edit post', 'comment', 'like']
+    ).order_by('-timestamp')[:10]
+    return render(request, 'blog/recent_activities.html', {'activities': activities})
+
+
+
 
 def index(request):
     if request.user.is_authenticated:
@@ -137,9 +146,14 @@ from .forms import UserProfileForm
 
 
 def comment_post(request, post_id):
-    # Fetch the post and annotate it with the total comment count
     post = get_object_or_404(Post, id=post_id)
-    posts = Post.objects.annotate(total_comments=Count('comments')).all()  # Annotating with comment count
+
+    # Track activity before saving the comment
+    UserActivity.objects.create(
+        user=request.user,
+        action_type='comment',
+        details=f"Commented on post: {post.title}"
+    )
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -159,7 +173,6 @@ def comment_post(request, post_id):
     else:
         form = CommentForm()
 
-    # Fetch comments related to the post
     comments = post.comments.filter(parent_comment__isnull=True)
 
     return render(request, 'blog/post_detail.html', {
@@ -169,14 +182,25 @@ def comment_post(request, post_id):
     })
 
 
+
 # Like a post
 @login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+
     if Like.objects.filter(post=post, user=request.user).exists():
         return HttpResponseForbidden("You have already liked this post.")
-    like = Like.objects.create(post=post, user=request.user)
-    return redirect('post_detail', post_id=post.id)  # Make sure the redirect is correct
+
+    # Track activity before liking the post
+    UserActivity.objects.create(
+        user=request.user,
+        action_type='like',
+        details=f"Liked a post: {post.title}"
+    )
+
+    Like.objects.create(post=post, user=request.user)
+    return redirect('post_detail', post_id=post.id)
+
 
 
 @login_required
@@ -190,11 +214,20 @@ def update_post(request, post_id):
         form = PostForm(request.POST, request.FILES, instance=post)  # Handle image updates
         if form.is_valid():
             form.save()
+
+            # Track activity after saving the updated post
+            UserActivity.objects.create(
+                user=request.user,
+                action_type='edit post',
+                details=f"Edited a post: {post.title}"
+            )
+
             return redirect('home')
     else:
         form = PostForm(instance=post)
 
     return render(request, 'blog/update_post.html', {'form': form})
+
 
 
 def about(request):
@@ -205,8 +238,14 @@ def contact(request):
 
 @login_required
 def delete_post(request, post_id):
-
     post = get_object_or_404(Post, id=post_id)
+
+    # Track activity before deleting the post
+    UserActivity.objects.create(
+        user=request.user,
+        action_type='delete post',
+        details=f"Deleted a post: {post.title}"
+    )
 
     if request.user != post.author:
         return redirect('home')
@@ -217,9 +256,12 @@ def delete_post(request, post_id):
 
     return render(request, 'blog/delete_post.html', {'post': post})
 
+
 # Post details view
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    post.views += 1  # Increment views
+    post.save(update_fields=['views'])  # Save only the 'views' field
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
@@ -228,7 +270,11 @@ def create_post(request):
     if request.method == "POST":
         print("Received POST request")
         print("FILES:", request.FILES)  # Debug: Print files received
-
+        UserActivity.objects.create(
+            user=request.user,
+            action_type='create post',
+            details=f"Created a new post: {post.title}"
+        )
         form = PostForm(request.POST, request.FILES)  
         if form.is_valid():
             post = form.save(commit=False)
@@ -242,6 +288,7 @@ def create_post(request):
             print("Form errors:", form.errors)  # Debug: Show form errors
     else:
         form = PostForm()
+        
     
     return render(request, 'blog/create_post.html', {'form': form})
 
@@ -287,7 +334,7 @@ def home(request):
     categories = Category.objects.all()
 
     # Apply pagination
-    paginator = Paginator(posts, 5)  # Show 5 posts per page
+    paginator = Paginator(posts, 6)  # Show 5 posts per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
