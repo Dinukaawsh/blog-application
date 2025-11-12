@@ -12,8 +12,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config, Csv
 
-BASE_DIR = Path(__file__).resolve().parent.parent  
+# Use PyMySQL as MySQLdb (alternative to mysqlclient)
+import pymysql
+pymysql.install_as_MySQLdb()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -21,7 +26,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  
+    BASE_DIR / "static",
 ]
 
 
@@ -29,29 +34,30 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-__iasi0-#8(^%l8965*t$ku(3#b+@e+&2djw=23esf8fo1gc81'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-email-password'
-DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
 
 
 
 # Application definition
 LOGIN_REDIRECT_URL = 'home'  # Redirect to home page after login
-LOGOUT_REDIRECT_URL = 'index' 
+LOGOUT_REDIRECT_URL = 'index'
 
 INSTALLED_APPS = [
+     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +66,113 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
 ]
+
+
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar": "navbar-dark bg-gradient-primary",  # Adds gradient effect to the navbar
+    "sidebar": "sidebar-dark-info",  # Lighter custom sidebar color for better contrast
+    "theme": "flatly",  # Clean theme
+    "font_family": "Arial, Helvetica, sans-serif",  # Custom font
+    "font_size": "14px",  # Standard font size
+    "sidebar_nav_small_text": True,  # Keep small text for a compact sidebar
+    "sidebar_nav_animation": "slide",  # Adds animation when expanding/collapsing the sidebar
+}
+
+# Custom Hover Effect for Sidebar
+JAZZMIN_UI_TWEAKS["sidebar_hover_effect"] = "highlight"
+
+# Sidebar Hover Effect Styling (if supported by theme)
+JAZZMIN_UI_TWEAKS["sidebar_nav_hover"] = "bg-primary text-white"
+
+
+JAZZMIN_UI_TWEAKS["font_family"] = "Roboto, sans-serif"  # Custom font (Roboto)
+JAZZMIN_UI_TWEAKS["font_size"] = "15px"  # A little larger font size
+
+JAZZMIN_UI_TWEAKS["sidebar_nav_small_text"] = True
+
+# Site URL for dynamic links
+SITE_URL = config('SITE_URL', default='http://127.0.0.1:8000')
+
+# Django Jazzmin Settings
+JAZZMIN_SETTINGS = {
+    "site_title": "My Blogger Admin",
+    "site_header": "Blogger Dashboard",
+    "site_brand": "My Blogger",
+    "welcome_sign": "Welcome to Your Blogging Dashboard!",
+    "copyright": "© 2025 My Blogger. All Rights Reserved.",
+    "footer": "Powered by Django and Jazzmin",  # Footer text for extra branding
+    "theme": "darkly",  # Dark theme for admin panel
+    "navigation_expanded": True,  # Expanded navigation by default
+    "order_with_respect_to": ["blog.Post", "blog.Comment", "auth.User"],  # Control the order of models in the sidebar
+    "custom_links": {
+        "blog": [
+            {
+                "name": "View Site",
+                "url": f"{SITE_URL}/",
+                "icon": "fas fa-globe",
+                "permissions": ["blog.view_post"]
+            },
+            {
+                "name": "Post Statistics",
+                "url": f"{SITE_URL}/admin/blog/post/stats/",
+                "icon": "fas fa-chart-bar",
+                "permissions": ["blog.view_post"]
+            }
+        ]
+    },
+    "sidebar_items": {
+        "blog": [
+            {
+                "name": "Post Statistics",
+                "url": f"{SITE_URL}/admin/blog/post/stats/",
+                "icon": "fas fa-chart-line",
+                "permissions": ["blog.view_post"]
+            },
+            {
+                "name": "Recent Posts",
+                "url": f"{SITE_URL}/admin/blog/post/",
+                "icon": "fas fa-newspaper",
+                "permissions": ["blog.view_post"]
+            },
+        ]
+    },
+}
+JAZZMIN_SETTINGS = {
+    "custom_links": {
+        "blog": [
+            {
+                "name": "View Site",
+                "url": f"{SITE_URL}/",
+                "icon": "fas fa-globe",
+                "permissions": ["blog.view_post"]
+            },
+            {
+            "name": "Post Statistics",
+            "url": f"{SITE_URL}/post/stats/",
+            "icon": "fas fa-chart-bar",
+            "permissions": ["blog.view_post"]
+        },
+            {
+                "name": "Recent Comments",
+                "url": f"{SITE_URL}/admin/blog/comment/",
+                "icon": "fas fa-comments",  # Comment icon for recent comments
+                "permissions": ["blog.view_comment"]
+            }
+        ]
+    }
+}
+JAZZMIN_UI_TWEAKS["action_buttons"] = {
+    "publish_comments": {
+        "background_color": "btn-success",  # Green background for publish button
+        "text_color": "text-white",  # White text for contrast
+        "font_size": "16px",  # Bigger font size for visibility
+    },
+}
+
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -97,18 +210,38 @@ WSGI_APPLICATION = 'blogger.wsgi.application'
 
 DATABASES = {
      'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blogger',  # Replace with your actual database name
-        'USER': 'root',       # Replace with your MySQL username
-        'PASSWORD': '',   # Replace with your MySQL password
-        'HOST': 'localhost',           # Keep 'localhost' if MySQL is running locally
-        'PORT': '3306',                # Default MySQL port
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.mysql'),
+        'NAME': config('DB_NAME', default='blogger'),
+        'USER': config('DB_USER', default='root'),
+        'PASSWORD': config('DB_PASSWORD', default=''),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',  # This will create a file 'db.sqlite3' in your project root
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'blogger',  # Replace with your MongoDB database name
+#         'ENFORCE_SCHEMA': True,                # Optional: Set to False if you don't want strict schema validation
+#         'CLIENT': {
+#             'host': 'mongodb+srv://dinukaawsh:<db_password>@crm.c2xra.mongodb.net/',  # MongoDB URI
+#             # If you need username/password:
+#             # 'username': 'your_username',
+#             # 'password': 'your_password',
+#         }
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -134,7 +267,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = config('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 
